@@ -200,11 +200,11 @@ The API follows the approved plan. These differences were added or needed:
 
 **Part 3 green build:** After the first successful run on `part-3`, the screenshot is saved in `docs/`.
 
-![Part 3 green CI build](docs/ci-green-build-part3.png)
+![Part 3 green CI build](docs/ci-green-build-part3.png.png)
 
 **Part 2 green build:**
 
-![Part 2 green CI build](docs/ci-green-build-part2.png)
+![Part 2 green CI build](docs/ci-green-build-part2.png.png)
 
 
 ## Video Presentation

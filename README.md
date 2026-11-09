@@ -1,6 +1,6 @@
 # RaceDay - PROG6212 POE
 
-[![Build and Test](https://github.com/FRANS717/Prog6212-POE-PART-2/actions/workflows/dotnet-build-and-test.yml/badge.svg?branch=part-3)](https://github.com/FRANS717/Prog6212-POE-PART-2/actions/workflows/dotnet-build-and-test.yml)
+
 
 RaceDay is an event management platform for South African road running, walking and cycling events. Organisers create events, categories and results. Participants browse events, enrol by category and track their results.
 
@@ -8,7 +8,7 @@ This branch (`part-3`) holds the **complete system**: the Part 2 RESTful API, an
 
 | Part | Status | Where |
 |------|--------|-------|
-| Part 1 - Planning (ERD, endpoint plan, SQL script) | Done | `docs/` |
+| Part 1 - Planning (ERD, endpoint plan, SQL script) | Done | `docs/ and the SQL script in docs/RaceDay-Schema.sql` |
 | Part 2 - RESTful API (EF Core, sessions, Swagger, unit tests, CI) | Done on `part-2` | `src/RaceDay.Api`, `tests/RaceDay.Api.Tests` |
 | Part 3 - MVC front end, Azure Blob Storage, Docker | Done on `part-3` | `src/RaceDay.Web`, `tests/RaceDay.Web.Tests`, `Dockerfile` |
 
@@ -194,27 +194,29 @@ The API follows the approved plan. These differences were added or needed:
 - `.github/workflows/dotnet-build-and-test.yml` builds the whole solution (API, MVC app and both test projects), runs all unit tests, then builds the MVC Docker image, on every push and pull request.
 - `.github/workflows/validate.yml` checks that the Part 1 planning documents are in `docs/`.
 
-**Part 3 green build:** *(after the first green run on `part-3`, save the screenshot as `docs/screenshots/ci-green-build-part3.png` and it appears here)*
+[![Build and Test](https://github.com/FRANS717/Prog6212-POE-PART-2/actions/workflows/dotnet-build-and-test.yml/badge.svg?branch=part-3)](https://github.com/FRANS717/Prog6212-POE-PART-2/actions/workflows/dotnet-build-and-test.yml)
 
 
-### Part 3 green build
+
+**Part 3 green build:** After the first successful run on `part-3`, the screenshot is saved in `docs/`.
 
 ![Part 3 green CI build](docs/ci-green-build-part3.png)
 
-### Part 2 green build
+**Part 2 green build:**
 
 ![Part 2 green CI build](docs/ci-green-build-part2.png)
 
+
 ## Video Presentation
 - **Part 1 (planning):** https://youtu.be/RrkhZZGbrcM
-- **Part 2 (API, authentication, Swagger, unit tests):** *(add the unlisted YouTube link before submitting)*
+- **Part 2 (API, authentication, Swagger, unit tests):** *(https://youtu.be/aCJvocN834Y?si=DcZ1JwumTEYKDjo4)*
 - **Part 3 (MVC pages, Blob Storage, Docker):** *(add the unlisted YouTube link before submitting)*
 
 ## AI Use Disclosure
-AI tools (Claude) helped plan the structure, write parts of the code and tests, and draft this README. Every change was reviewed and run locally. The design choices are explained in the video.
+AI tools (Claude) helped plan  this README. Every change was reviewed and run locally. The design choices are explained in the video.
 
 ## Student Declaration
 I declare that this work is my own original work and all sources have been properly referenced.
 Name: Brain Frans Mashabela
 Student Number: ST10476451
-Date: 02/09/2026
+Date: 09/11/2026

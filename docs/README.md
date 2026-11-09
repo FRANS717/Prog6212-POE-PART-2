@@ -196,7 +196,7 @@ The API follows the approved plan. These differences were added or needed:
 
 **Part 3 green build:** *(after the first green run on `part-3`, save the screenshot as `docs/screenshots/ci-green-build-part3.png` and it appears here)*
 
-![Part 3 green CI build](docs/screenshots/ci-green-build-part3.png)
+![Part 3 green CI build](https://github.com/FRANS717/Prog6212-POE-PART-2/blob/part-3/docs/ci-green-build-part3.png.png
 
 **Part 2 green build:** https://github.com/FRANS717/Prog6212-POE-PART-2/actions/runs/38826787930
 

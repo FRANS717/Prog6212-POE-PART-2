@@ -1,4 +1,4 @@
-name: RaceDay - Build and Test API
+name: RaceDay - Build and Test API and MVC
 
 # Runs on every push (any branch) and on every pull request, so a broken build or failing test shows up immediately.
 on:
@@ -37,3 +37,16 @@ jobs:
         with:
           name: test-results
           path: TestResults/
+
+  docker-build:
+    runs-on: ubuntu-latest
+    name: Build the MVC Docker image
+    needs: build-and-test
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build RaceDay.Web image
+        run: docker build -t raceday-web .
+

@@ -21,6 +21,7 @@ public class EventsController(RaceDayDbContext db, IFileStorage storage) : ApiCo
     /// When true, returns only the events of the logged-in Organiser. Added beyond the Part 1 plan so the
     /// Organiser dashboard can list its own events. Requires an Organiser session.
     /// </param>
+    /// <param name="ct">Cancels the request if the caller goes away.</param>
     /// <response code="200">Matching events, earliest first.</response>
     /// <response code="400">Unknown event type.</response>
     /// <response code="401">mine=true but not logged in.</response>
@@ -182,7 +183,7 @@ public class EventsController(RaceDayDbContext db, IFileStorage storage) : ApiCo
 
         if (!await IsOwnerAsync(existing.OrganiserId, ct)) return Forbid403();
 
-        // Child rows are removed first because the foreign keys restrict deletes. Everything is saved in one transaction.
+        // Child rows go first, because the foreign keys block deleting the event while they exist. One save does it all.
         var results = db.Results.Where(r => r.Enrolment.EventId == id);
         var enrolments = db.Enrolments.Where(en => en.EventId == id);
         var categories = db.Categories.Where(c => c.EventId == id);

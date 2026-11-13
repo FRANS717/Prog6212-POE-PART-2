@@ -29,7 +29,8 @@ public class RaceDayApiClient(HttpClient http, IHttpContextAccessor accessor, IL
     public async Task<AuthResult> RegisterAsync(RegisterRequest request, CancellationToken ct)
     {
         var result = await SendAsync<AuthResponse>(HttpMethod.Post, "api/auth/register", JsonContent.Create(request, options: Json), ct);
-        return new AuthResult { Success = result.Success, StatusCode = result.StatusCode, Error = result.Error, Data = result.Data };
+        return new AuthResult { Success = result.Success, StatusCode = result.StatusCode, Data = result.Data,
+            Error = result.StatusCode == HttpStatusCode.NotFound ? ApiNotFound("api/auth/register") : result.Error };
     }
 
     public async Task<AuthResult> LoginAsync(LoginRequest request, CancellationToken ct)
@@ -44,7 +45,10 @@ public class RaceDayApiClient(HttpClient http, IHttpContextAccessor accessor, IL
 
             if (!response.IsSuccessStatusCode)
             {
-                return new AuthResult { StatusCode = response.StatusCode, Error = await ReadErrorAsync(response, ct) };
+                var error = response.StatusCode == HttpStatusCode.NotFound
+                    ? ApiNotFound("api/auth/login")
+                    : await ReadErrorAsync(response, ct);
+                return new AuthResult { StatusCode = response.StatusCode, Error = error };
             }
 
             // The API sets its session cookie on a successful login. I keep only the value for later requests.
@@ -146,6 +150,20 @@ public class RaceDayApiClient(HttpClient http, IHttpContextAccessor accessor, IL
         SendAsync<RaceResult>(HttpMethod.Put, $"api/results/{id}", JsonContent.Create(request, options: Json), ct);
 
     // ---------------- Plumbing ----------------
+
+    public const string ApiNotFoundMessage =
+        "The RaceDay API could not be found. Make sure the RaceDay.Api project is running (start both projects with the \"API + Web (Part 3)\" profile) and that nothing else is using its port.";
+
+    /// <summary>
+    /// The auth endpoints always exist on the RaceDay API, so a 404 from them means the MVC app reached some other
+    /// program on the API's address. Say so clearly, and log where it looked, instead of "item not found".
+    /// </summary>
+    private string ApiNotFound(string path)
+    {
+        logger.LogError("The API at {BaseAddress} returned 404 for {Path}. Another program may be using that address, or RaceDay.Api is not running.",
+            http.BaseAddress, path);
+        return ApiNotFoundMessage;
+    }
 
     public const string ServiceDownMessage = "The RaceDay service is not reachable right now. Please try again in a moment.";
 

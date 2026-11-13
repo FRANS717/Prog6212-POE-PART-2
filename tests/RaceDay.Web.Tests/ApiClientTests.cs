@@ -42,6 +42,22 @@ public class ApiClientTests
     }
 
     [Fact]
+    public async Task Login_and_register_explain_when_the_API_is_not_found()
+    {
+        // An empty 404 means another program answered on the API's address, not the RaceDay API.
+        var handler = new FakeApiHandler(_ => new HttpResponseMessage(HttpStatusCode.NotFound));
+        var api = TestFactory.Client(handler, TestFactory.HttpContext());
+
+        var login = await api.LoginAsync(new LoginRequest("jarred@raceday.com", "Password123!"), CancellationToken.None);
+        var register = await api.RegisterAsync(
+            new RegisterRequest("jarred@raceday.com", "Password123!", "Jarred", "Participant", null, null, new DateOnly(2000, 1, 1)),
+            CancellationToken.None);
+
+        Assert.Equal(RaceDayApiClient.ApiNotFoundMessage, login.Error);
+        Assert.Equal(RaceDayApiClient.ApiNotFoundMessage, register.Error);
+    }
+
+    [Fact]
     public async Task Logged_in_requests_forward_Jarreds_API_session_cookie()
     {
         var session = new TestSession();

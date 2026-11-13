@@ -8,7 +8,7 @@ public class ApiOptions
     public const string Section = "Api";
 
     /// <summary>URL the MVC server calls, e.g. http://localhost:5043, or http://host.docker.internal:5043 inside Docker.</summary>
-    public string BaseUrl { get; set; } = "http://localhost:5043";
+    public string BaseUrl { get; set; } = "http://127.0.0.1:5043";
 
     /// <summary>URL the browser uses for API-hosted images. Defaults to BaseUrl.</summary>
     public string? PublicBaseUrl { get; set; }
